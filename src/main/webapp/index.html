@@ -1,0 +1,61 @@
+<!DOCTYPE html>  
+
+<meta charset="utf-8" />  
+
+<title>CDI + WebSocket</title>  
+
+<h3>Click 'Start' button to connect</h3> 
+
+<input onclick="test()" value="Start" type="button">
+
+<h4>Once connected, use your favorite REST client (e.g. Postman) to send a HTTP POST to [host]:[port]/Explore-WebSocket-CDI-Integration-Maven/rest/feed and pay attention to the server logs</h4> 
+
+
+<h3>Not a JS expert, hence no impl for disconnect... just close the browser tab ;-)</h3> 
+
+<script language="javascript" type="text/javascript"> 
+
+var wsUri = "ws://localhost:8080/Explore-WebSocket-CDI-Integration-Maven/wsep";
+var output;
+
+function init() { 
+output = document.getElementById("output"); 
+
+}
+
+function test() { 
+websocket = new WebSocket(wsUri); 
+websocket.onopen = function(evt) { onOpen(evt) };
+websocket.onclose = function(evt) { onClose(evt) }; 
+websocket.onmessage = function(evt) { onMessage(evt) }; 
+}
+
+
+function onOpen(evt) { 
+writeToScreen("Listening. . . . "); 
+ }
+
+ function onClose(evt) { 
+ writeToScreen("DISCONNECTED");
+ }
+
+ function onMessage(evt) { 
+ writeToScreen('<span style="color: blue;">RECEIVED: ' + evt.data+'</span>'); 
+ }
+
+ function writeToScreen(message) { 
+ var pre = document.createElement("p");
+ pre.style.wordWrap = "break-word"; 
+ pre.innerHTML = message;
+ output.appendChild(pre); 
+ }
+
+ window.addEventListener("load", init, false); 
+ 
+ </script>  
+ 
+ 
+ 
+ <div id="output"></div> 
+ 
+ </html>
